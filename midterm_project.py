@@ -54,35 +54,35 @@ graz_water = graz_tags[graz_tags["natural"].notna()]
 #fig, ax = ox.plot_graph( graph, node_size=5, bgcolor="white", node_color="black", edge_color="black")
 
 #version 2, only dedicated pedestrian paths
-#filter = '["highway"~"footway|path|pedestrian"]'
-#graph2 = ox.graph_from_place(place, network_type="walk", custom_filter=filter, simplify=True)
-#graph2 = ox.project_graph(graph2, to_crs=main_crs)
-#fig, ax = ox.plot_graph(graph2, node_size=0, bgcolor="white", edge_color="black")
+filter = '["highway"~"footway|path|pedestrian"]'
+graph2 = ox.graph_from_place(place, network_type="walk", custom_filter=filter, simplify=True)
+graph2 = ox.project_graph(graph2, to_crs=main_crs)
+fig, ax = ox.plot_graph(graph2, node_size=0, bgcolor="white", edge_color="black")
 
 ## Land Cover ##
 
-place = "Graz, Austria"
-main_crs = "EPSG:31256"
-raster_path = r"data/2021350_Mosaik_LC.tif"
+#place = "Graz, Austria"
+#main_crs = "EPSG:31256"
+#raster_path = r"data/2021350_Mosaik_LC.tif"
 
-graz_boundary = ox.geocode_to_gdf(place)         # EPSG:4326
-graz_boundary = graz_boundary.to_crs(main_crs)   # EPSG:31256
+#graz_boundary = ox.geocode_to_gdf(place)         # EPSG:4326
+#graz_boundary = graz_boundary.to_crs(main_crs)   # EPSG:31256
 
-with rasterio.open(raster_path) as src:
-    print("Raster CRS:", src.crs)        #  EPSG:31256
-    print("Boundary CRS:", graz_boundary.crs)
+#with rasterio.open(raster_path) as src:
+#    print("Raster CRS:", src.crs)        #  EPSG:31256
+#    print("Boundary CRS:", graz_boundary.crs)
 
-    shapes = [graz_boundary.geometry.iloc[0]]
-    out_image, out_transform = mask(src, shapes, crop=True)
+#    shapes = [graz_boundary.geometry.iloc[0]]
+#    out_image, out_transform = mask(src, shapes, crop=True)
 
-    out_meta = src.meta.copy()
-    out_meta.update({
-        "height": out_image.shape[1],
-        "width": out_image.shape[2],
-        "transform": out_transform
-    })
+#    out_meta = src.meta.copy()
+#    out_meta.update({
+#        "height": out_image.shape[1],
+#        "width": out_image.shape[2],
+#        "transform": out_transform
+#    })
 
-output_raster = r"data/LC_graz2.tif"
-with rasterio.open(output_raster, "w", **out_meta) as dest:
-    dest.write(out_image)
+#output_raster = r"data/LC_graz2.tif"
+#with rasterio.open(output_raster, "w", **out_meta) as dest:
+#    dest.write(out_image)
 
