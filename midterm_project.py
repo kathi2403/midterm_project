@@ -1,19 +1,18 @@
 
+## Mid-Term Project, Group 2 ##
+
 import osmnx as ox
 import matplotlib.pyplot as plt
 import geopandas as gpd
 import rasterio
 from rasterio.mask import mask
+from rasterio.features import shapes
+from shapely.geometry import shape
+import numpy as np
 
 ## City und districts ##
 place = "Graz, Austria"
 main_crs = "EPSG:31256"
-
-#admin_osm_tags = {
-#    "boundary": "administrative",
-    #"admin_level": "9"
-#}
-#df_districts = ox.features_from_place(place, tags=admin_osm_tags).to_crs(main_crs)
 
 gdf_boundaries = ox.features_from_place(
     place,
@@ -61,28 +60,21 @@ fig, ax = ox.plot_graph(graph2, node_size=0, bgcolor="white", edge_color="black"
 
 ## Land Cover ##
 
-#place = "Graz, Austria"
-#main_crs = "EPSG:31256"
-#raster_path = r"data/2021350_Mosaik_LC.tif"
+raster_path = r"data/2021350_Mosaik_LC.tif"
 
-#graz_boundary = ox.geocode_to_gdf(place)         # EPSG:4326
-#graz_boundary = graz_boundary.to_crs(main_crs)   # EPSG:31256
+graz_boundary = ox.geocode_to_gdf(place).to_crs(main_crs)
 
-#with rasterio.open(raster_path) as src:
-#    print("Raster CRS:", src.crs)        #  EPSG:31256
-#    print("Boundary CRS:", graz_boundary.crs)
+with rasterio.open(raster_path) as src:
+    out_image, out_transform = mask(src, [graz_boundary.geometry.iloc[0]], crop=True)  #clip raster to city boundary
+    lc = out_image[0] #extract land cover layer
+    valid_mask = lc != src.nodata if src.nodata else np.ones_like(lc, dtype=bool) #no nan data (filter valid data)
 
-#    shapes = [graz_boundary.geometry.iloc[0]]
-#    out_image, out_transform = mask(src, shapes, crop=True)
+gdf = gpd.GeoDataFrame([
+    {"geometry": shape(geom), "lc": int(value)} 
+    for geom, value in shapes(lc, mask=valid_mask, transform=out_transform) #raster to polygon 
+], crs=main_crs)
 
-#    out_meta = src.meta.copy()
-#    out_meta.update({
-#        "height": out_image.shape[1],
-#        "width": out_image.shape[2],
-#        "transform": out_transform
-#    })
+gdf.to_file(r"LC_graz.gpkg", driver="GPKG")
 
-#output_raster = r"data/LC_graz2.tif"
-#with rasterio.open(output_raster, "w", **out_meta) as dest:
-#    dest.write(out_image)
+
 
