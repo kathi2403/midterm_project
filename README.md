@@ -12,7 +12,7 @@ The workflow follows the methodology from Heikinheimo et al. (2023), adapted to 
 
 
 
-DATA SOURCES:
+DATA SOURCES, downloaded on 01.12.2025:
 
  	BEV (Hg.) Land Cover (2021). http://bev.gv.at/Services/Produkte/Land-Cover/Land-Cover.html --> Classes 1, 3, 6
 
