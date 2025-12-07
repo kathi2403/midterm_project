@@ -14,21 +14,23 @@ The workflow follows the methodology from Heikinheimo et al. (2023), adapted to 
 
 DATA SOURCES:
 
-&nbsp;	BEV (Hg.) Land Cover (2021). http://bev.gv.at/Services/Produkte/Land-Cover/Land-Cover.html --> Classes 1, 3, 6
+ 	BEV (Hg.) Land Cover (2021). http://bev.gv.at/Services/Produkte/Land-Cover/Land-Cover.html --> Classes 1, 3, 6
 
-&nbsp;	OpenStreetMap Contributors: Administrative Boundaries,
+ 	OpenStreetMap Contributors: Administrative Boundaries,
 
-&nbsp;				    Street Network: '\["highway"~"footway|path|pedestrian"]',
+&nbsp;				    Buildings
 
-&nbsp;				    "leisure": \["park", "pitch", "playground", "sports\_centre", "stadium"],
+ 				    Street Network: '\["highway"~"footway|path|pedestrian"]',
 
-&nbsp;				    "natural": \["water", "wetland"]
+ 				    "leisure": \["park", "pitch", "playground", "sports\_centre", "stadium"],
+
+ 				    "natural": \["water", "wetland"]
 
 
 
 ORIGINAL PAPER:
 
-&nbsp;	Heikinheimo, Vuokko; Tiitu, Maija; Viinikka, Arto (2023): Data on different types of green spaces and their accessibility in the seven largest urban regions in Finland.
+ 	Heikinheimo, Vuokko; Tiitu, Maija; Viinikka, Arto (2023): Data on different types of green spaces and their accessibility in the seven largest urban regions in Finland.
 
-&nbsp;	In: Data in brief 50, S. 109458. DOI: 10.1016/j.dib.2023.109458
+ 	In: Data in brief 50, S. 109458. DOI: 10.1016/j.dib.2023.109458
 
